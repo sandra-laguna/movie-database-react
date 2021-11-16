@@ -11,5 +11,10 @@ export const movieRepository = {
     searchMovie: async movieName =>
     await HTTPRequester.searchMovie({
       url: getUrl(MovieConfig.getSearch, {movieName})
+    }),
+
+    getTrailer: async idMovie =>
+    await HTTPRequester.getTrailer({
+      url: getUrl(MovieConfig.getTrailer, {idMovie})
     })
 };

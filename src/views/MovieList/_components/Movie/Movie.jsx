@@ -15,8 +15,8 @@ const setVoteClass = (vote) => {
     }
 }
 
-const Movie = ({title, poster_path, overview, vote_average}) => (
-    <div className={styles.movie}>
+export const Movie = ({title, poster_path, overview, vote_average, id, onMovieClick}) => (
+    <div className={styles.movie} >
         <img src={poster_path ? (IMG_API+poster_path) : noimage} alt={title}/>
         <div className={styles.movieInfo}>
             <h3>{title}</h3>
@@ -25,10 +25,10 @@ const Movie = ({title, poster_path, overview, vote_average}) => (
 
         <div className={styles.movieOver}>
             <h2>Overview:</h2>
-            <img className={styles.trailerBtn} alt={`Trailer ${title}`} src={FilmLogo} title="Trailer"/>
+            <img onClick= {() => onMovieClick(id)} className={styles.trailerBtn} alt={`Trailer ${title}`} src={FilmLogo} title="Trailer"/>
             <p>{overview}</p>
         </div>
+
+        <p>{id}</p>
     </div>
 )
-
-export default Movie;

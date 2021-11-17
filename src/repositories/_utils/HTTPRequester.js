@@ -18,17 +18,9 @@ export const HTTPRequester = (() => {
     /* AXIOS */
     get: options => {
       const headers = options.headers;
-      console.log(`${baseURL}${options.url}${mapQueryString(options.queryString)}`);
+      //console.log(`${baseURL}${options.url}${mapQueryString(options.queryString)}`);
       return axios.get(`${baseURL}${options.url}${mapQueryString(options.queryString)}`, { headers });
-    },
-    searchMovie: options => {
-      const headers = options.headers;
-      return axios.get(`${baseURL}${options.url}`,  { headers });
-    },
-    getTrailer: options => {
-      console.log("options.url ",options.url)
-      return axios.get(`${baseURL}${options.url}`);
-    },
+    }
   };
   return HTTPRequesterAPI;
 })();

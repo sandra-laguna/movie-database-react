@@ -11,15 +11,17 @@ import { MovieService } from 'services/MovieService';
 import { Spinner } from 'views/_components/Spinner';
 import { Info } from 'views/_components/Info';
 import { Trailer } from 'views/_components/Trailer';
+import { ReleaseDate } from 'views/_components/ReleaseDate';
 
 export const MovieList = () => {
   const initialState = {
     searchTerm: '',
     isLoading: false,
-    trailerId: ''
+    trailerId: '',
+    releaseDateId: ''
   };
 
-  const [movies, setMovies, setTrailers] = useState([]);
+  const [movies, setMovies] = useState([]);
   const [movieSelectedId, setMovieSelectedId] = useState();
   const [movieState, moviesDispatcher] = useReducer(movieReducer, initialState);
   const [movieInfoVisible, setMovieInfoVisible] = useState(false);
@@ -55,10 +57,6 @@ export const MovieList = () => {
     moviesDispatcher({ type: 'SET_SEARCHED_FILTER', payload: e.target.value });
   };
 
-  const refreshPage = () => {
-    window.location.reload(false);
-  };
-
   const onCloseMovieTrailer = () => {
     setMovieInfoVisible(false);
   };
@@ -74,9 +72,14 @@ export const MovieList = () => {
         <Dialog onClose={onCloseMovieTrailer}>
           <Trailer movieId={movieSelectedId} />
           <Info text="" />
+          <ReleaseDate movieId={movieSelectedId} />
         </Dialog>
       );
     }
+  };
+
+  const refreshPage = () => {
+    window.location.reload(false);
   };
 
   return (

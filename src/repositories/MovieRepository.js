@@ -17,5 +17,11 @@ export const movieRepository = {
     return await HTTPRequester.get({
       url: getUrl(MovieConfig.getTrailer, { movieId })
     });
+  },
+
+  getReleaseDate: async movieId => {
+    return await HTTPRequester.get({
+      url: getUrl(MovieConfig.getReleaseDate, { movieId })
+    });
   }
 };

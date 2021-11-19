@@ -1,6 +1,7 @@
 import isNil from 'lodash/isNil';
 import { Movie } from '../entities/Movie';
 import { Trailer } from '../entities/Trailer';
+import { ReleaseDate } from 'entities/ReleaseDate';
 import { movieRepository } from '../repositories/MovieRepository';
 
 const getAll = async () => {
@@ -39,8 +40,21 @@ const getTrailer = async movieId => {
   return trailerList;
 };
 
+const getReleaseDate = async movieId => {
+  const releaseDateListDTO = await movieRepository.getReleaseDate(movieId);
+  const releaseDateList = releaseDateListDTO.data.results.map(
+    releaseDate =>
+      new ReleaseDate({
+        iso_3166_1: releaseDate.iso_3166_1,
+        release_dates: releaseDate.release_dates
+      })
+  );
+  return releaseDateList;
+};
+
 export const MovieService = {
   getAll,
   searchMovie,
-  getTrailer
+  getTrailer,
+  getReleaseDate
 };

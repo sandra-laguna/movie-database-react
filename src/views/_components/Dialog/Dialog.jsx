@@ -8,7 +8,5 @@ export const Dialog = ({ children, onClose }) => {
         {children}
       </div>
     </div>
-  ); //Darle estilos para que sea modal
+  );
 };
-
-//<Dialog><span></span></Dialog> El children es el span

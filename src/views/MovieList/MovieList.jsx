@@ -12,29 +12,35 @@ import { Spinner } from 'views/_components/Spinner';
 import { Info } from 'views/_components/Info';
 import { Trailer } from 'views/_components/Trailer';
 import { ReleaseDate } from 'views/_components/ReleaseDate';
+import { Pagination } from 'views/_components/Pagination/Pagination';
 
 export const MovieList = () => {
   const initialState = {
     searchTerm: '',
     isLoading: false,
-    trailerId: '',
-    releaseDateId: ''
+    pageNumber: 1
   };
 
   const [movies, setMovies] = useState([]);
   const [movieSelectedId, setMovieSelectedId] = useState();
   const [movieState, moviesDispatcher] = useReducer(movieReducer, initialState);
   const [movieInfoVisible, setMovieInfoVisible] = useState(false);
-  const { searchTerm, isLoading } = movieState;
+  const { searchTerm, isLoading, pageNumber } = movieState;
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     getMovies();
-  }, []);
+  }, [pageNumber]);
+
+  const onChangePage = number => {
+    moviesDispatcher({ type: 'SET_PAGE_NUMBER', payload: number });
+    setCurrentPage(number);
+  };
 
   const getMovies = async () => {
     moviesDispatcher({ type: 'SET_IS_LOADING', payload: true });
     try {
-      const movieData = await MovieService.getAll();
+      const movieData = await MovieService.getAll(pageNumber);
       setMovies(movieData);
     } catch (error) {
       console.error(error);
@@ -105,6 +111,7 @@ export const MovieList = () => {
           movies.length > 0 && movies.map(movie => <Movie key={movie.id} {...movie} onTrailerClick={onTrailerClick} />)
         )}
         {renderMovieInfo()}
+        <Pagination paginate={onChangePage} postPerPage={2} totalPosts={10} currentPage={currentPage} />
       </div>
     </div>
   );

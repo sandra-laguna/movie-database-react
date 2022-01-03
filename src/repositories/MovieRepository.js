@@ -3,9 +3,9 @@ import { getUrl } from './_utils/UrlUtils';
 import { HTTPRequester } from './_utils/HTTPRequester';
 
 export const movieRepository = {
-  getAll: async () =>
+  getAll: async page =>
     await HTTPRequester.get({
-      url: getUrl(MovieConfig.getAll, {})
+      url: getUrl(MovieConfig.getAll, { page })
     }),
 
   searchMovie: async movieName =>
@@ -23,5 +23,9 @@ export const movieRepository = {
     return await HTTPRequester.get({
       url: getUrl(MovieConfig.getReleaseDate, { movieId })
     });
-  }
+  },
+  getPages: async () =>
+    await HTTPRequester.get({
+      url: getUrl(MovieConfig.getPages, {})
+    })
 };

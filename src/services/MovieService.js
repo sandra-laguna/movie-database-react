@@ -4,8 +4,8 @@ import { Trailer } from '../entities/Trailer';
 import { ReleaseDate } from 'entities/ReleaseDate';
 import { movieRepository } from '../repositories/MovieRepository';
 
-const getAll = async () => {
-  const moviesListDTO = await movieRepository.getAll();
+const getAll = async page => {
+  const moviesListDTO = await movieRepository.getAll(page);
   console.log(moviesListDTO);
   if (isNil(moviesListDTO?.data?.results)) {
     return;
@@ -52,9 +52,12 @@ const getReleaseDate = async movieId => {
   return releaseDateList;
 };
 
+const getPages = async () => await movieRepository.getPages();
+
 export const MovieService = {
   getAll,
   searchMovie,
   getTrailer,
-  getReleaseDate
+  getReleaseDate,
+  getPages
 };

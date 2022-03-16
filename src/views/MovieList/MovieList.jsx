@@ -26,7 +26,6 @@ export const MovieList = () => {
   const [movieState, moviesDispatcher] = useReducer(movieReducer, initialState);
   const [movieInfoVisible, setMovieInfoVisible] = useState(false);
   const { searchTerm, isLoading, pageNumber } = movieState;
-  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     getMovies();
@@ -34,7 +33,6 @@ export const MovieList = () => {
 
   const onChangePage = number => {
     moviesDispatcher({ type: 'SET_PAGE_NUMBER', payload: number });
-    setCurrentPage(number);
   };
 
   const getMovies = async () => {
@@ -111,7 +109,7 @@ export const MovieList = () => {
           movies.length > 0 && movies.map(movie => <Movie key={movie.id} {...movie} onTrailerClick={onTrailerClick} />)
         )}
         {renderMovieInfo()}
-        <Pagination paginate={onChangePage} postPerPage={2} totalPosts={10} currentPage={currentPage} />
+        <Pagination paginate={onChangePage} maxPages={25} />
       </div>
     </div>
   );
